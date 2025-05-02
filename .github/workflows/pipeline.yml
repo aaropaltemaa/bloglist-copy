@@ -1,4 +1,4 @@
-name: Say Hello
+name: Deployment pipeline
 
 on:
   push:
