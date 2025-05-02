@@ -6,6 +6,7 @@ const blogsRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const middleware = require("./utils/middleware");
+const path = require("path");
 
 const app = express();
 
@@ -22,6 +23,12 @@ mongoose
 
 app.use(express.static("dist"));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
+
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
