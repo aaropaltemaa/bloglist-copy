@@ -1,0 +1,17 @@
+name: Say Hello
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  hello-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "Hello from GitHub Actions!"
+      - name: Now it is
+        run: date
+      - name: Directory content
+        run: ls -l
