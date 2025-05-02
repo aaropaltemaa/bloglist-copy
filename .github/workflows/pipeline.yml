@@ -1,0 +1,33 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Run non-database backend tests
+        run: |
+          cd backend
+          node --test tests/first.test.js
+
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
