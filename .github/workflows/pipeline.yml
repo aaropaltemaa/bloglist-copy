@@ -20,10 +20,11 @@ jobs:
           cd backend
           npm install
 
-      - name: Run backend tests
+      - name: Run non-database backend tests
         run: |
           cd backend
-          npm test
+          node --test tests/first.test.js
+
 
       - name: Build frontend
         run: |
