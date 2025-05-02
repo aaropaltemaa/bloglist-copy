@@ -21,21 +21,24 @@ mongoose
     logger.error("error connection to MongoDB:", error.message);
   });
 
-app.use(express.static("dist"));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
-});
-
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
+// API routes
 app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 
+// Serve static frontend after API routes
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// For any other request, serve the frontend's index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
+});
+
+// Error handling middleware
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
